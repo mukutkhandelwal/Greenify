@@ -1,6 +1,6 @@
 import { Request,Response,NextFunction } from "express"
 import User from "../../models/User"
-import { CustomError } from "../../middleware/error"
+import { CustomError } from "../../middleware/Error/error"
 import * as bcrypt from "bcryptjs"
 import _ from "lodash"
 
