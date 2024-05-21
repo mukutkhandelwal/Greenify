@@ -11,7 +11,9 @@ interface ExtendedRequest extends Request{
 
 export const registerUser = async (req:Request,res:Response,next:NextFunction)=>{
     try{
-   const {userName,firstName,lastName,email,password,user} = req.body
+    const defaultUser = "user"
+   const {userName,firstName,lastName,email,password} = req.body
+   const user = req.body.user || defaultUser
    const existUser = await User.findOne({userName})
    if(existUser){
     res.status(400)
@@ -28,7 +30,6 @@ export const registerUser = async (req:Request,res:Response,next:NextFunction)=>
 catch(err){
 next(err)
 }
-
 }
 
 export const loginUser = async (req:Request,res:Response,next:NextFunction)=>{
@@ -68,3 +69,34 @@ catch(err){
     next(err)
 }
  }
+
+ export const updateUser = async (req:ExtendedRequest,res:Response,next:NextFunction)=>{
+    try{
+        const userId = req.userId
+        const {userName,email,firstName,lastName,shippingAddress,billingAddress} = req.body
+        const userData = await User.findByIdAndUpdate(userId,{firstName,lastName,shippingAddress,billingAddress},{new:true})
+        if(!userData){
+            res.status(400)
+            throw new CustomError("User not found",400)
+        }
+        res.status(200).json({"data":userData})
+    }
+    catch(err){
+        next(err)
+    }
+}
+
+export const adminUserFetch = async (req:Request,res:Response,next:NextFunction)=>{
+    try{
+        const userID = req.body.userID
+        const userData = await User.findById(userID).select("-_id -password -updatedAt -__v -createdAt")
+        if(!userData){
+            res.status(400)
+            throw new CustomError("User not found",400)
+        }
+        res.status(200).json({"data":userData})
+    }
+    catch(err){
+        next(err)
+    }
+}
