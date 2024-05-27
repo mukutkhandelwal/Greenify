@@ -8,7 +8,9 @@ import cors from "cors";
 import * as mongoose from "mongoose";
 import UserRouter from "./Routes/Api/users.router";
 import adminRouter from "./Routes/Api/admin.router";
+import ProductRouter from "./Routes/Api/products.router"
 import { errorHandler } from "./middleware/Error/errorHandler";
+
 const app:Application = express();
 dotenv.config()
 const port = process.env.PORT || 3000;
@@ -48,4 +50,5 @@ app.listen(port,()=>{
 
 app.use(`${api}/users`,UserRouter)
 app.use(`${api}/admin`,adminRouter)
+app.use(`${api}/products`,ProductRouter)
 app.use(errorHandler)
