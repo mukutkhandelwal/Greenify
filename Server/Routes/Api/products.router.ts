@@ -4,5 +4,5 @@ import  {getAllProducts}  from "../Controller/products.controller";
 const ProductRouter = Router();
 
 ProductRouter.get("/",getAllProducts)
-
+ProductRouter.get("/:productId")
 export default ProductRouter

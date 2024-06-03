@@ -3,11 +3,9 @@ import User from "../../models/User"
 import { CustomError } from "../../middleware/Error/error"
 import * as bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken";
+import { ExtendedRequest } from "../../Types/User.request";
 import _ from "lodash"
 
-interface ExtendedRequest extends Request{
-    userId?:string
-}
 
 export const registerUser = async (req:Request,res:Response,next:NextFunction)=>{
     try{

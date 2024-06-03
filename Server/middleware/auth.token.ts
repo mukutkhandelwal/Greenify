@@ -18,6 +18,7 @@ export const verifyJWT = (req:ExtendedRequest,res:Response,next:NextFunction)=>{
         const token = authHeader.split(" ")[1]
         const decode = jwt.verify(token,process.env.JWT_SECRET!);
         const userId =(decode as JwtPayload).userId
+        const userType = (decode as JwtPayload).user
         req.userId = userId
         next()
 
@@ -27,9 +28,9 @@ export const verifyJWT = (req:ExtendedRequest,res:Response,next:NextFunction)=>{
             throw new CustomError("Token Expired", 400);
           }
         else if (err instanceof jwt.JsonWebTokenError) {
-            throw new CustomError("Invalid Token", 400); // More specific error message
+            throw new CustomError("Invalid Token", 400);
           } else {
-            throw new CustomError("Forbidden", 403); // Re-throw original error
+            throw new CustomError("Forbidden", 403); 
           }
     }
 }
