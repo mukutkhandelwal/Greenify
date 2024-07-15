@@ -12,7 +12,7 @@ import { ArrowDown } from 'lucide-react';
 export default function Navbar() {
   const [isHovered,setHovered] = useState(false)
   return (
-    <div className="navbar">
+    <div className="navbar sticky top-0 z-50 bg-white">
         
         <ul>
           <li>
